@@ -120,7 +120,7 @@ static int fp_gpio_parse_dts(struct fp_data *fp_data)
         goto exit;
     }
 
-//#if CONFIG_OPPO_FINGERPRINT_PROJCT != 18181 && CONFIG_OPPO_FINGERPRINT_PROJCT != 18385
+#if CONFIG_OPPO_FINGERPRINT_PROJCT != 18181 && CONFIG_OPPO_FINGERPRINT_PROJCT != 18385
     ret = fp_request_named_gpio(fp_data, "oppo,fp-id0",
             &fp_data->gpio_id0);
     if (ret) {
@@ -134,7 +134,7 @@ static int fp_gpio_parse_dts(struct fp_data *fp_data)
         ret = FP_ERROR_GPIO;
         goto exit;
     }
-//#endif
+#endif
 
     ret = fp_request_named_gpio(fp_data, "oppo,fp-id2",
             &fp_data->gpio_id2);
@@ -295,15 +295,15 @@ static int fp_register_proc_fs(struct fp_data *fp_data)
 {
     uint32_t fp_id_retry;
     fp_id_retry = 0;
-//#if CONFIG_OPPO_FINGERPRINT_PROJCT == 18181 ||  CONFIG_OPPO_FINGERPRINT_PROJCT == 18385
+#if CONFIG_OPPO_FINGERPRINT_PROJCT == 18181 ||  CONFIG_OPPO_FINGERPRINT_PROJCT == 18385
     fp_data->fp_id0 = 1;
     fp_data->fp_id1 = 1;
     fp_data->fp_id2 = gpio_get_value(fp_data->gpio_id2);
-/*#else
+#else
     fp_data->fp_id0 = gpio_get_value(fp_data->gpio_id0);
     fp_data->fp_id1 = gpio_get_value(fp_data->gpio_id1);
-    fp_data->fp_id2 = gpio_get_value(fp_data->gpio_id2);*/
-//#endif
+    fp_data->fp_id2 = gpio_get_value(fp_data->gpio_id2);
+#endif
     dev_err(fp_data->dev, "fp_register_proc_fs check: fp_id0= %d, fp_id1= %d, fp_id2= %d, fp_id_retry= %d\n", \
             fp_data->fp_id0, fp_data->fp_id1, fp_data->fp_id2, fp_id_retry);
 
